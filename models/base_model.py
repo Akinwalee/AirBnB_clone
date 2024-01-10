@@ -10,11 +10,20 @@ import datetime
 class BaseModel:
     """Base class for other classes in the AirBnB \
             module"""
-    
-    def __init__(self):
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
+
+    def __init__(self, *args, **kwargs):
+        """Initialize instance variables"""
+
+        if len(kwargs) != 0:
+            for key, val in kwargs.items():
+                if key != "__class__":
+                    if key == "created_at" or key == "updated_at":
+                        val = datetime.strptime(val)
+                    setattr(self, key, val)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.datetime.now()
+            self.updated_at = datetime.datetime.now()
 
     def __str__(self):
         """Prints details about the class name \
@@ -30,7 +39,9 @@ class BaseModel:
     def to_dict(self):
         """Generates the dictionary representation of \
                 a BaseModel instance (Serializing the class)"""
-        self.__dict__["__class__"] = "BaseModel"
-        self.__dict__["updated_at"] = self.__dict__.get("updated_at").isoformat()
-        self.__dict__["created_at"] = self.__dict__.get("created_at").isoformat()
-        return (self.__dict__)
+
+        self_dict = self.__dict__
+        self_dict["__class__"] = "BaseModel"
+        self_dict["updated_at"] = self_dict.get("updated_at").isoformat()
+        self_dict["created_at"] = self_dict.get("created_at").isoformat()
+        return (self_dict)
