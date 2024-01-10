@@ -12,18 +12,19 @@ class BaseModel:
             module"""
 
     def __init__(self, *args, **kwargs):
-        """Initialize instance variables"""
+        """Initialize instance variabls"""
 
+        date = datetime.datetime
         if len(kwargs) != 0:
             for key, val in kwargs.items():
                 if key != "__class__":
                     if key == "created_at" or key == "updated_at":
-                        val = datetime.strptime(val)
+                        val = date.strptime(val, "%Y-%m-%dT%H:%M:%S.%f")
                     setattr(self, key, val)
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.datetime.now()
-            self.updated_at = datetime.datetime.now()
+            self.created_at = date.now()
+            self.updated_at = date.now()
 
     def __str__(self):
         """Prints details about the class name \
