@@ -2,6 +2,7 @@
 """File storage modulle for the AirBnB project"""
 
 import json
+import os
 
 
 class FileStorage:
@@ -25,7 +26,7 @@ class FileStorage:
         obj.to_dict()
         obj_dict = obj.__dict__
         key = "{}.{}".format(obj_dict["__class__"], obj_dict["id"])
-        self.__objects[key] = obj
+        self.__objects[key] = obj_dict
 
     def save(self):
         """Serializes and saves __object to JSON file \
@@ -38,6 +39,8 @@ class FileStorage:
         """Desrializes JSON file __file_path to \
                 __objects"""
 
-        if len(self.__file_path) != 0:
-            with open("{}".format(self.__file_path), "r+", encoding="utf-8") as f:
-                self.__objects = json.load(f)
+        if os.path.exists(self.__file_path):
+            with open("{}".format(self.__file_path), "r", encoding="utf-8") as f:
+                if f.read():
+                    f.seek(0)
+                    self.__objects = json.load(f)
