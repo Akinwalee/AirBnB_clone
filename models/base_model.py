@@ -1,10 +1,11 @@
-#!usr/bin/env python3
+#!/usr/bin/env python3
 """A module that act as a Base class for all other classes \
         in the AirBnB clone package"""
 
 import uuid
 import json
 import datetime
+from .__init__ import storage
 
 
 class BaseModel:
@@ -25,6 +26,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = date.now()
             self.updated_at = date.now()
+            storage.new(self)
 
     def __str__(self):
         """Prints details about the class name \
@@ -35,6 +37,7 @@ class BaseModel:
     def save(self):
         """Updates the updated_at instance attribute"""
 
+        storage.save()
         self.updated_at = datetime.datetime.now()
 
     def to_dict(self):
