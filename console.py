@@ -84,6 +84,17 @@ class HBNBCommand(cmd.Cmd):
             all_list.append(model.__str__())
             print(all_list)
 
+    def do_update(self, line):
+        model = BaseModel()
+        # Split the arguments into a list
+        line_list = line.split()
+
+        if line_list >= 4:
+            className = line_list[0]
+            classId = line_list[1]
+            attributeName = line_list[2]
+            attributeValue = line_list[3]e
+
 
 
 
