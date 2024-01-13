@@ -3,6 +3,7 @@
 import cmd
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
+from models.__init__ import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -38,62 +39,51 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, line):
         """Show the dictionary representation of an object \
         by taking the class name and id"""
-
-        #I think there's a problem with your implementation of this function.
-        #The you're creating a new instance of BaseModel and printing it's details
-        #In contrast, you're supposed to print the details of the instance with 
-        #Id supplied from the console. 
-        # The expression: "classId != model.instances[id]" will always be true!
-        # Because model.id and classId are Ids of two different classes.
-        file = FileStorage()
+        obj_list = storage.all()
         # Split the arguments into a list
         line_list = line.split()
 
-        if len(line_list) >= 2:
-            className = line_list[0]
-            classId = line_list[1]
-
-            key = "{}.{}".format(className, classId)
-
-            if len(className) == 0:
-                print("** class name missing **")
-            elif className != "BaseModel":
-                print("** class doesn't exist **")
-            elif len(classId) == 0:
-                print("** instance id missing **")
-            elif key not in file.__objects:
-                print("** no instance found **")
-            else:
-                model = BaseModel()
-                print(model.__str__())
+        if len(line_list) == 2:
+            class_name = line_list[0]
+            class_id = line_list[1]
+            if class_name == "BaseModel":
+                key = "{}.{}".format(class_name, class_id)
+                if key in obj_list:
+                    model = BaseModel(**obj_list[key])
+                    print(model)
+                else:
+                    print("** no instance found **")
+        elif len(line_list) == 1:
+            print("** instance id missing **")
+            if line_list[0] != "BaseModel":
+                print("** class name doesn't exist **")
+        else:
+            print("** class name is missing **")
 
 
     def do_destroy(self, line):
         """Delete an object by class name and object id"""
-        file = FileStorage()
+        obj_list = storage.all()
+        model = BaseModel()
         # Split the arguments into a list
         line_list = line.split()
 
-        if len(line_list) >= 2:
-            className = line_list[0]
-            classId = line_list[-1]
-            key = "{}.{}".format(className, classId)
-
-            if len(className) == 0:
-                print("** class name missing **")
-            elif className != "BaseModel":
-                print("** class doesn't exist **")
-            elif len(classId) == 0:
+        if len(line_list) == 2:
+            class_name = line_list[0]
+            class_id = line_list[1]
+            if class_name == "BaseModel":
+                key = "{}.{}".format(class_name, class_id)
+                if key in obj_list:
+                    model = BaseModel(obj_list[key])
+                    del model
+                else:
+                    print("** no instance found **")
+            elif len(line_list) == 1:
                 print("** instance id missing **")
-            elif key not in file.__objects:
-                print("** no instance found **")
-            else:
-                #There's a problem with this implementation
-                #The del function doesn't accept such expressions
-                model = BaseModel()
-                del model.__class__
-                del model.id
-                model.save()
+                if line_list[0] != "BaseModel":
+                    print("class doesn't exist")
+                else:
+                    print("class name is missing")
 
 
     def do_all(self, line):
