@@ -91,17 +91,10 @@ class HBNBCommand(cmd.Cmd):
         """Prints the string representation of all instances \
         based on the class name"""
         obj_dict = storage.all()
-        all_list = []
-        if line == "BaseModel" or line == "":
-            for key in obj_dict:
-                class_name = obj_dict[key]["__class__"]
-                obj_id = obj_dict[key]['id']
-                obj_d = obj_dict[key]
-                string = "[{}] ({}) {}".format(class_name, obj_id, obj_d)
-                all_list.append(string)
-                print(all_list)
-        else:
+        if line != "BaseModel" and line != "":
             print("** class doesn't exist **")
+        else:
+            print([str(BaseModel(**obj_dict[i])) for i in obj_dict.keys()])
 
     def do_update(self, line):
         """Update instance details based on class name and id"""
