@@ -74,33 +74,34 @@ class HBNBCommand(cmd.Cmd):
             if class_name == "BaseModel":
                 key = "{}.{}".format(class_name, class_id)
                 if key in obj_list:
-                    model = BaseModel(obj_list[key])
-                    del model
+                    #model = BaseModel(**obj_list[key])
+                    del obj_list[key]
+                    storage.save()
                 else:
                     print("** no instance found **")
-            elif len(line_list) == 1:
-                print("** instance id missing **")
-                if line_list[0] != "BaseModel":
-                    print("class doesn't exist")
-                else:
-                    print("class name is missing")
+        elif len(line_list) == 1:
+            print("** instance id missing **")
+            if line_list[0] != "BaseModel":
+                print("** class doesn't exist **")
+        else:
+            print("** class name is missing **")
 
 
     def do_all(self, line):
         """Prints the string representation of all instances \
         based on the class name"""
-
-        #There's a problem with this implementation, similar to the issue
-        # I raised with the do_show method.
-        # Please check.
-        file = FileStorage()
+        obj_dict = storage.all()
         all_list = []
-        if line != "BaseModel":
-            print("** class doesn't exist **")
+        if line == "BaseModel" or line == "":
+            for key in obj_dict:
+                class_name = obj_dict[key]["__class__"]
+                obj_id = obj_dict[key]['id']
+                obj_d = obj_dict[key]
+                string = "[{}] ({}) {}".format(class_name, obj_id, obj_d)
+                all_list.append(string)
+                print(all_list)
         else:
-            string_rep = file.save()
-            all_list.append(string_rep)
-            print(all_list)
+            print("** class doesn't exist **")
 
     def do_update(self, line):
         """Update instance details based on class name and id"""
