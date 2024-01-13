@@ -32,8 +32,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             model = BaseModel()
-            model.save()
             print(model.id)
+            model.save()
 
     def do_show(self, line):
         """Show the dictionary representation of an object \
@@ -61,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
             elif len(classId) == 0:
                 print("** instance id missing **")
-            elif key not in file.all():
+            elif key not in file.__objects:
                 print("** no instance found **")
             else:
                 model = BaseModel()
