@@ -18,10 +18,8 @@ class HBNBCommand(cmd.Cmd):
         """Quit command to exit the program."""
         return True
 
-    def postloop(self):
-        pass
-
     def emptyline(self):
+        """Makes the console execute nothing when nothing is typed."""
         pass
 
     def do_create(self, line):
