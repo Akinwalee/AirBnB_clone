@@ -23,6 +23,8 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, line):
+        """Creates a new instance of the BaseModel class"""
+
         if len(line) == 0:
             print("** class name missing **")
         elif line != "BaseModel":
@@ -33,11 +35,20 @@ class HBNBCommand(cmd.Cmd):
             print(model.id)
 
     def do_show(self, line):
+        """Show the dictionary representation of an object \
+        by taking the class name and id"""
+
+        #I think there's a problem with your implementation of this function.
+        #The you're creating a new instance of BaseModel and printing it's details
+        #In contrast, you're supposed to print the details of the instance with 
+        #Id supplied from the console. 
+        # The expression: "classId != model.instances[id]" will always be true!
+        # Because model.id and classId are Ids of two different classes.
         model = BaseModel()
         # Split the arguments into a list
         line_list = line.split()
 
-        if line_list >= 2:
+        if len(line_list) >= 2:
             className = line_list[0]
             classId = line_list[-1]
 
@@ -54,11 +65,13 @@ class HBNBCommand(cmd.Cmd):
 
 
     def do_destroy(self, line):
-         model = BaseModel()
+        """Delete an object by class name and object id"""
+
+        model = BaseModel()
         # Split the arguments into a list
         line_list = line.split()
 
-        if line_list >= 2:
+        if len(line_list) >= 2:
             className = line_list[0]
             classId = line_list[-1]
 
@@ -71,11 +84,19 @@ class HBNBCommand(cmd.Cmd):
             elif classId != model.id:
                 print("** no instance found **")
             else:
+                #There's a problem with this implementation
+                #The del function doesn't accept such expressions
                 del className and classId
                 model.save()
 
 
     def do_all(self, line):
+        """Prints the string representation of all instances \
+        based on the class name"""
+
+        #There's a problem with this implementation, similar to the issue
+        # I raised with the do_show method.
+        # Please check.
         all_list = []
         if line != "BaseModel":
             print("** class doesn't exist **")
@@ -85,15 +106,17 @@ class HBNBCommand(cmd.Cmd):
             print(all_list)
 
     def do_update(self, line):
+        """Update instance details based on class name and id"""
+
         model = BaseModel()
         # Split the arguments into a list
         line_list = line.split()
 
-        if line_list >= 4:
+        if len(line_list) >= 4:
             className = line_list[0]
             classId = line_list[1]
             attributeName = line_list[2]
-            attributeValue = line_list[3]e
+            attributeValue = line_list[3]
 
 
 
