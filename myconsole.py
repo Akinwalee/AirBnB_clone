@@ -128,8 +128,16 @@ class HBNBCommand(cmd.Cmd):
         class_id = line_l[1]
         key = "{}.{}".format(class_name, class_id)
         if key in obj_dict:
-            model = BaseModel(obj_dict[key])
-            print(model)
+           # model = BaseModel(obj_dict[key])
+            print(BaseModel(**obj_dict[key]))
+
+    def do_all(self, line):
+        all_dict = storage.all()
+        if line != "BaseModel" and line != "":
+            print("dn.....")
+        else:
+            print([str(BaseModel(**all_dict[i])) for i in all_dict.keys()])
+    
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
