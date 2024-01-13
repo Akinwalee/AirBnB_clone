@@ -48,21 +48,23 @@ class HBNBCommand(cmd.Cmd):
         model = BaseModel()
         # Split the arguments into a list
         line_list = line.split()
-
-        if len(line_list) >= 2:
-            className = line_list[0]
-            classId = line_list[-1]
-
-            if len(className) == 0:
-                print("** class name missing **")
-            elif className != "BaseModel":
-                print("** class doesn't exist **")
-            elif len(classId) == 0:
-                print("** instance id missing **")
-            elif classId != model.instances[id]:
-                print("** no instance found **")
-            else:
-                print(model.__str__())
+        
+        if len(line_list) == 2:
+            class_name = line_list[0]
+            class_id = line_list[1]
+            if class_name == "BaseModel":
+                key = "{}.{}".format(class_name, class_id)
+                if key in obj_dict:
+                    model = BaseModel(obj_dict[key])
+                    print(model)
+                else:
+                    print("instance does not exist")
+        elif len(line_list) == 1:
+            print("id is missing")
+            if line_list[0] != "BaseModel":
+                print("class doesn't exist")
+        else:
+            print("class name is missing")
 
 
     def do_destroy(self, line):
