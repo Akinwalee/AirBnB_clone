@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Defines te entry point of the command interpreter."""
 import cmd
-from models import base_model
+from models.base_model import BaseModel
+from models.__init__ import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -86,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 #There's a problem with this implementation
                 #The del function doesn't accept such expressions
-                del className and classId
+                #del className and classId
                 model.save()
 
 
@@ -118,7 +119,15 @@ class HBNBCommand(cmd.Cmd):
             attributeName = line_list[2]
             attributeValue = line_list[3]
 
-
+    def do_test(self, line):
+        obj_dict = storage.all()
+        line_l = line.split()
+        class_name = line_l[0]
+        class_id = line_l[1]
+        key = "{}.{}".format(class_name, class_id)
+        if key in obj_dict:
+            model = BaseModel(obj_dict[key])
+            print(model)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
