@@ -30,18 +30,17 @@ class FileStorage:
     def save(self):
         """Serializes and saves __object to JSON file \
                 __file_path"""
+        path = self.__file_path
+        if os.path.exists(path):
+            with open("{}".format(path), "r", encoding="utf-8") as f:
+                current = json.load(f)
+        else:
+            current = {}
         
-        with open("{}".format(self.__file_path), "w+", encoding="utf-8") as f:
-            #f.seek(0)
-            #if f.read():
-                #f.seek(0)
-                #current = json.load(f)
-                #print("updating...")
-                #current.append(self.__objects)
-                #f.seek(0)
-                #json.dump(current, f)
-            current = json.load(f) if f.read() else {}
-            current.update(self.__objects)
+        current.update(self.__objects)
+        with open("{}".format(self.__file_path), "w", encoding="utf-8") as f:
+            #current = json.load(f) if f.read() else {}
+            #current.update(self.__objects)
             json.dump(current, f)
 
     def reload(self):

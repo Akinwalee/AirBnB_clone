@@ -2,6 +2,11 @@
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 all_objs = storage.all()
 print("-- Reloaded objects --")
@@ -25,3 +30,19 @@ my_user2.email = "airbnb2@mail.com"
 my_user2.password = "root"
 my_user2.save()
 print(my_user2)
+
+print("--Create State")
+my_state = State()
+print(my_state)
+print("--Create City")
+my_city = City()
+print(my_city)
+print("--Create Amenity")
+my_amen = Amenity()
+print(my_amen)
+print("--Create Place")
+my_place = Place()
+print(my_place)
+print("--Create Review")
+rev = Review()
+print(rev)
