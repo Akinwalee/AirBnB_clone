@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Defines a class Review."""
-from base_model import BaseModel
+from .base_model import BaseModel
 
 
 class Review(BaseModel):

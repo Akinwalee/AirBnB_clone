@@ -5,6 +5,7 @@
 import uuid
 import json
 import datetime
+import re
 from .__init__ import storage
 
 
@@ -33,20 +34,39 @@ class BaseModel:
         """Prints details about the class name \
                 object id, and instance variable"""
 
-        return ("[BaseModel] ({}) {}".format(self.id, self.__dict__))
+        class_name = self.get_class()
+        return ("[{}] ({}) {}".format(class_name, self.id, self.__dict__))
 
     def save(self):
         """Updates the updated_at instance attribute"""
 
-        storage.save()
         self.updated_at = datetime.datetime.now()
+        storage.save()
 
     def to_dict(self):
         """Generates the dictionary representation of \
                 a BaseModel instance (Serializing the class)"""
-
-        self_dict = self.__dict__
-        self_dict["__class__"] = "BaseModel"
-        self_dict["updated_at"] = self_dict.get("updated_at").isoformat()
-        self_dict["created_at"] = self_dict.get("created_at").isoformat()
+        
+        self_dict = self.__dict__.copy()
+        self_dict["__class__"] = self.get_class()
+        self_dict["updated_at"] = self_dict["updated_at"].isoformat()
+        self_dict["created_at"] = self_dict["created_at"].isoformat()
         return (self_dict)
+
+    def get_class(self):
+        """"handler to get class name"""
+        
+        classes = {
+                "base_model": "BaseModel",
+                "user": "User",
+                "state": "State",
+                "city": "City",
+                "amenity": "Amenity",
+                "place": "Place",
+                "review": "Review"
+                }
+        class_str = str(self.__class__)
+        match = re.search(r"\.(\w+)", class_str)
+        class_name = match.group(1)
+        if class_name in classes:
+            return (classes[class_name])

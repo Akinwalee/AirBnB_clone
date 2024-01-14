@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Module for the Places class"""
 
-from base_model import BaseModel
+from .base_model import BaseModel
 
 
-class Places(BaseModel):
-    """Places class, inheriting from the \
+class Place(BaseModel):
+    """Place class, inheriting from the \
             BaseModel class. Holds information \
             listed places in the HBnB project"""
 
