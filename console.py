@@ -44,6 +44,7 @@ class HBNBCommand(cmd.Cmd):
         if len(line_list) == 2:
             class_name = line_list[0]
             class_id = line_list[1]
+
             if class_name == "BaseModel":
                 key = "{}.{}".format(class_name, class_id)
                 if key in obj_list:
@@ -51,10 +52,10 @@ class HBNBCommand(cmd.Cmd):
                     print(model)
                 else:
                     print("** no instance found **")
+            else:
+                print("** class name doesn't exist **")
         elif len(line_list) == 1:
             print("** instance id missing **")
-            if line_list[0] != "BaseModel":
-                print("** class name doesn't exist **")
         else:
             print("** class name is missing **")
 
@@ -77,10 +78,10 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
                 else:
                     print("** no instance found **")
+            else:
+                print("** class doesn't exist **")
         elif len(line_list) == 1:
             print("** instance id missing **")
-            if line_list[0] != "BaseModel":
-                print("** class doesn't exist **")
         else:
             print("** class name is missing **")
 
@@ -97,17 +98,33 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, line):
         """Update instance details based on class name and id"""
 
-        model = BaseModel()
-        file = FileStorage()
+        obj_dict = storage.all()
         # Split the arguments into a list
         line_list = line.split()
 
-        if len(line_list) >= 4:
-            className = line_list[0]
-            classId = line_list[1]
-            attributeName = line_list[2]
-            attributeValue = line_list[3]
-
+        if len(line_list) == 0:
+            print("** class name missing **")
+        elif len(line_list) == 1:
+            print("** instance id missing **")
+        elif len(line_list) == 2:
+            print("** attribute name missing **")
+        elif len(line_list) == 3:
+            print("** value missing **")
+        else:
+            class_name = line_list[0]
+            class_id = line_list[1]
+            attribute = line_list[2]
+            value_s = line_list[3]
+            key = "{}.{}".format(class_name, class_id)
+            if class_name != "BaseModel":
+                print("** class doesn't exist ")
+            elif key not in obj_dict:
+                print("** no instance found")
+            else:
+                model = BaseModel(**obj_dict[key])
+                value = eval(value_s)
+                setattr(model, attribute, value)
+                model.save()
 
 
 if __name__ == '__main__':

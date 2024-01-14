@@ -23,17 +23,26 @@ class FileStorage:
         """Creates a new object obj in __objects \
                 with key <obj class>.id"""
 
-        obj.to_dict()
-        obj_dict = obj.__dict__
+        obj_dict = obj.to_dict()
         key = "{}.{}".format(obj_dict["__class__"], obj_dict["id"])
         self.__objects[key] = obj_dict
 
     def save(self):
         """Serializes and saves __object to JSON file \
                 __file_path"""
-
-        with open("{}".format(self.__file_path), "w", encoding="utf-8") as f:
-            json.dump(self.__objects, f)
+        
+        with open("{}".format(self.__file_path), "w+", encoding="utf-8") as f:
+            #f.seek(0)
+            #if f.read():
+                #f.seek(0)
+                #current = json.load(f)
+                #print("updating...")
+                #current.append(self.__objects)
+                #f.seek(0)
+                #json.dump(current, f)
+            current = json.load(f) if f.read() else {}
+            current.update(self.__objects)
+            json.dump(current, f)
 
     def reload(self):
         """Desrializes JSON file __file_path to \
@@ -41,7 +50,7 @@ class FileStorage:
 
         path = self.__file_path
         if os.path.exists(path):
-            with open("{}".format(path), "r", encoding="utf-8") as f:
+            with open("{}".format(path), "r+", encoding="utf-8") as f:
                 if f.read():
                     f.seek(0)
                     self.__objects = json.load(f)

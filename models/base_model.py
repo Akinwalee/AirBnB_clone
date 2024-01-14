@@ -38,15 +38,15 @@ class BaseModel:
     def save(self):
         """Updates the updated_at instance attribute"""
 
-        storage.save()
         self.updated_at = datetime.datetime.now()
+        storage.save()
 
     def to_dict(self):
         """Generates the dictionary representation of \
                 a BaseModel instance (Serializing the class)"""
 
-        self_dict = self.__dict__
+        self_dict = self.__dict__.copy()
         self_dict["__class__"] = "BaseModel"
-        self_dict["updated_at"] = self_dict.get("updated_at").isoformat()
-        self_dict["created_at"] = self_dict.get("created_at").isoformat()
+        self_dict["updated_at"] = self_dict["updated_at"].isoformat()
+        self_dict["created_at"] = self_dict["created_at"].isoformat()
         return (self_dict)
