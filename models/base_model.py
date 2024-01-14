@@ -46,7 +46,7 @@ class BaseModel:
     def to_dict(self):
         """Generates the dictionary representation of \
                 a BaseModel instance (Serializing the class)"""
-        
+
         self_dict = self.__dict__.copy()
         self_dict["__class__"] = self.get_class()
         self_dict["updated_at"] = self_dict["updated_at"].isoformat()
@@ -55,7 +55,7 @@ class BaseModel:
 
     def get_class(self):
         """"handler to get class name"""
-        
+
         classes = {
                 "base_model": "BaseModel",
                 "user": "User",

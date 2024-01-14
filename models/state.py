@@ -4,5 +4,6 @@ from .base_model import BaseModel
 
 
 class State(BaseModel):
-    """State class shows information of the state where the house is located."""
+    """State class shows information of the state\
+            where the house is located."""
     name = ""
