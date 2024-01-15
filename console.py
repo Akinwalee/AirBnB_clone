@@ -15,7 +15,7 @@ from models.__init__ import storage
 class HBNBCommand(cmd.Cmd):
     """A simple console for manipulating object in the Airbnb project."""
 
-    prompt = "(hbnb)"
+    prompt = "(hbnb) "
     classes = [
             "BaseModel",
             "User",
