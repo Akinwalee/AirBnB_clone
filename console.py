@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Defines te entry point of the command interpreter."""
 import cmd
+import os
+import json
+import datetime
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -25,7 +28,7 @@ class HBNBCommand(cmd.Cmd):
             "Place",
             "Review"
             ]
-
+    date = datetime.datetime
     def do_EOF(self, line):
         """Function quits the prgram with EOF."""
         return True
@@ -177,9 +180,24 @@ class HBNBCommand(cmd.Cmd):
             else:
                 model = BaseModel(**obj_dict[key])
                 setattr(model, attribute, value)
-                print(model.id)
-                model.save()
+                model.updated_at = self.date.now()
+                self.handle_save(model, key)
 
+    def handle_save(self, model, key):
+        """handles the saving for update"""
+
+        obj, path = storage.get_obj()
+        obj[key] = model.to_dict()
+
+        if os.path.exists(path):
+            with open("{}".format(path), "r", encoding="utf-8") as f:
+                current = json.load(f)
+        else:
+            current = {}
+
+        current.update(obj)
+        with open("{}".format(path), "w", encoding="utf-8") as f:
+            json.dump(current, f)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
