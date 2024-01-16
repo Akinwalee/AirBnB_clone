@@ -182,7 +182,7 @@ class HBNBCommand(cmd.Cmd):
 
     def handle_save(self, model, key):
         """handles the saving for update"""
-        store = storage._FileStorage
+        store = storage.FileStorage
         store.__objects[key] = model
 
         path = store.__file_path
