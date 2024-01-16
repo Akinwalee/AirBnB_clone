@@ -183,16 +183,16 @@ class HBNBCommand(cmd.Cmd):
     def handle_save(self, model, key):
         """handles the saving for update"""
         # store = storage.FileStorage
-        FileStorage.__objects[key] = model
+        obj, path = storage.get_obj()
+        obj[key] = model
 
-        path = FileStorage.__file_path
         if os.path.exists(path):
             with open("{}".format(path), "r", encoding="utf-8") as f:
                 current = json.load(f)
         else:
             current = {}
 
-        current.update(FileStorage.__objects)
+        current.update(obj)
         with open("{}".format(path), "w", encoding="utf-8") as f:
             json.dump(current, f)
 
