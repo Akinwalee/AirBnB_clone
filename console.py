@@ -174,15 +174,30 @@ class HBNBCommand(cmd.Cmd):
             attribute = line_list[2]
             value = eval(line_list[3])
             key = "{}.{}".format(class_name, class_id)
-            if class_name != "BaseModel":
-                print("** class doesn't exist **")
-            elif key not in obj_dict:
-                print("** no instance found **")
-            else:
-                model = BaseModel(**obj_dict[key])
+            if class_name in self.classes:
+                key = "{}.{}".format(class_name, class_id)
+                if key in obj_list:
+                    if class_name == "BaseModel":
+                        model = BaseModel(**obj_list[key])
+                    elif class_name == "User":
+                        model = User(**obj_list[key])
+                    elif class_name == "State":
+                        model = State(**obj_list[key])
+                    elif class_name == "City":
+                        model = City(**obj_list[key])
+                    elif class_name == "Amenity":
+                        model = Amenity(**obj_list[key])
+                    elif class_name == "Place":
+                        model = Place(**obj_list[key])
+                    else:
+                        model = Review(**obj_list[key])
                 setattr(model, attribute, value)
                 model.updated_at = self.date.now()
                 self.handle_save(model, key)
+                else:
+                    print("** no instance found **")
+            else:
+                print("** class doesn't exist **")
 
     def handle_save(self, model, key):
         """handles the saving for update"""
