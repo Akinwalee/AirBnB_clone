@@ -29,6 +29,7 @@ class HBNBCommand(cmd.Cmd):
             "Review"
             ]
     date = datetime.datetime
+
     def do_EOF(self, line):
         """Function quits the prgram with EOF."""
         return True
@@ -198,6 +199,7 @@ class HBNBCommand(cmd.Cmd):
         current.update(obj)
         with open("{}".format(path), "w", encoding="utf-8") as f:
             json.dump(current, f)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
