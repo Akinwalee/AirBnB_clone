@@ -176,24 +176,24 @@ class HBNBCommand(cmd.Cmd):
             key = "{}.{}".format(class_name, class_id)
             if class_name in self.classes:
                 key = "{}.{}".format(class_name, class_id)
-                if key in obj_list:
+                if key in obj_dict:
                     if class_name == "BaseModel":
-                        model = BaseModel(**obj_list[key])
+                        model = BaseModel(**obj_dict[key])
                     elif class_name == "User":
-                        model = User(**obj_list[key])
+                        model = User(**obj_dict[key])
                     elif class_name == "State":
-                        model = State(**obj_list[key])
+                        model = State(**obj_dict[key])
                     elif class_name == "City":
-                        model = City(**obj_list[key])
+                        model = City(**obj_dict[key])
                     elif class_name == "Amenity":
-                        model = Amenity(**obj_list[key])
+                        model = Amenity(**obj_dict[key])
                     elif class_name == "Place":
-                        model = Place(**obj_list[key])
+                        model = Place(**obj_dict[key])
                     else:
-                        model = Review(**obj_list[key])
-                setattr(model, attribute, value)
-                model.updated_at = self.date.now()
-                self.handle_save(model, key)
+                        model = Review(**obj_dict[key])
+                    setattr(model, attribute, value)
+                    model.updated_at = self.date.now()
+                    self.handle_save(model, key)
                 else:
                     print("** no instance found **")
             else:
