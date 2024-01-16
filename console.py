@@ -186,7 +186,7 @@ class HBNBCommand(cmd.Cmd):
         """handles the saving for update"""
         # store = storage.FileStorage
         obj, path = storage.get_obj()
-        obj[key] = model
+        obj[key] = model.to_dict()
 
         if os.path.exists(path):
             with open("{}".format(path), "r", encoding="utf-8") as f:
