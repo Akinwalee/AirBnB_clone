@@ -178,8 +178,22 @@ class HBNBCommand(cmd.Cmd):
                 model = BaseModel(**obj_dict[key])
                 setattr(model, attribute, value)
                 print(model.id)
-                model.save()
+                self.handle_save(model)
 
+    def handle_save(self, model):
+        """handles the saving for update"""
+        storage.__objects[key] = model
+
+        path = storage.__file_path
+        if os.path.exists(path):
+            with open("{}".format(path), "r", encoding="utf-8") as f:
+                current = json.load(f)
+        else:
+            current = {}
+
+        current.update(storage.__objects)
+        with open("{}".format(path), "w", encoding="utf-8") as f:
+            json.dump(current, f)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
