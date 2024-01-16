@@ -3,6 +3,7 @@
 import cmd
 import os
 import json
+import datetime
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -27,7 +28,7 @@ class HBNBCommand(cmd.Cmd):
             "Place",
             "Review"
             ]
-
+    date = datetime.datetime
     def do_EOF(self, line):
         """Function quits the prgram with EOF."""
         return True
