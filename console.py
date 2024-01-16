@@ -180,7 +180,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 model = BaseModel(**obj_dict[key])
                 setattr(model, attribute, value)
-                model.updated_at = date.now()
+                model.updated_at = self.date.now()
                 self.handle_save(model, key)
 
     def handle_save(self, model, key):
