@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """Defines a class Sate."""
-from base_model import BaseModel
+from .base_model import BaseModel
 
 
-class Sate(BaseModel):
-    """State class shows information of the state where the house is located."""
+class State(BaseModel):
+    """State class shows information of the state\
+            where the house is located."""
     name = ""

@@ -11,7 +11,4 @@ Usage
 ______
 
 
-## Authors
 
-Obatula Fuad Adebari <obatulafuad@gmail.com>
-Aribisala Praise Oluwaseun <aribisalapraise12@gmail.com>
