@@ -176,9 +176,12 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
             else:
                 model = BaseModel(**obj_dict[key])
+                print("before setting attribute...")
+                print(model)
                 setattr(model, attribute, value)
-                print(model.id)
-                model.save()
+                print("after setting attribute...")
+                print(model.to_dict)
+                storage.save()
 
 
 if __name__ == '__main__':
