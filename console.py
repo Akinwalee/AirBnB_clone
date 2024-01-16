@@ -15,8 +15,17 @@ from models.__init__ import storage
 class HBNBCommand(cmd.Cmd):
     """A simple console for manipulating object in the Airbnb project."""
 
-    prompt = "(hbnb)"
-    classes = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
+    prompt = "(hbnb) "
+    classes = [
+            "BaseModel",
+            "User",
+            "State",
+            "City",
+            "Amenity",
+            "Place",
+            "Review"
+            ]
+
     def do_EOF(self, line):
         """Function quits the prgram with EOF."""
         return True
@@ -92,7 +101,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class name is missing **")
 
-
     def do_destroy(self, line):
         """Delete an object by class name and object id"""
         obj_list = storage.all()
@@ -115,7 +123,6 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             print("** class name is missing **")
-
 
     def do_all(self, line):
         """Prints the string representation of all instances \

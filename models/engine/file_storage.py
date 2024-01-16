@@ -36,11 +36,12 @@ class FileStorage:
                 current = json.load(f)
         else:
             current = {}
-        
+
         current.update(self.__objects)
         with open("{}".format(self.__file_path), "w", encoding="utf-8") as f:
-            #current = json.load(f) if f.read() else {}
-            #current.update(self.__objects)
+
+            """current = json.load(f) if f.read() else {} \
+            current.update(self.__objects)"""
             json.dump(current, f)
 
     def reload(self):
