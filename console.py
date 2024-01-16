@@ -179,12 +179,12 @@ class HBNBCommand(cmd.Cmd):
             else:
                 model = BaseModel(**obj_dict[key])
                 setattr(model, attribute, value)
-                print(model.id)
+                model.updated_at = date.now()
                 self.handle_save(model, key)
 
     def handle_save(self, model, key):
         """handles the saving for update"""
-        # store = storage.FileStorage
+
         obj, path = storage.get_obj()
         obj[key] = model.to_dict()
 
