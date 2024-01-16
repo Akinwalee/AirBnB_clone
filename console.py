@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Defines te entry point of the command interpreter."""
 import cmd
+import os
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
