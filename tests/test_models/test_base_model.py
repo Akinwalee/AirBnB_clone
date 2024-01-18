@@ -1,7 +1,7 @@
 #!usr/bin/env python3
 """Module for testing the BaseModel class"""
 
-from .models.base_model import BaseModel
+from models.base_model import BaseModel
 import unittest
 
 

@@ -2,7 +2,7 @@
 """Module for unittesting the file_storage module"""
 
 import unittest
-from .models.engine.file_storage import FileStorage
+from models.engine.file_storage import FileStorage
 
 
 class TestFileStorage(unittest.TestCase):
