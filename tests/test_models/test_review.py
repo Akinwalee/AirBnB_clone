@@ -1,7 +1,7 @@
 #!usr/bin/env python3
 """Module for testing the review class"""
 
-from .models.review import Review
+from models.review import Review
 import unittest
 
 
