@@ -1,7 +1,7 @@
 #!usr/bin/env python3
 """Module for testing the state class"""
 
-from .models.state import State
+from models.state import State
 import unittest
 
 
