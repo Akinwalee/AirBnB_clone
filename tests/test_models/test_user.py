@@ -1,7 +1,7 @@
 #!usr/bin/env python3
 """Module for testing the user class"""
 
-from .models.user import User
+from models.user import User
 import unittest
 
 
