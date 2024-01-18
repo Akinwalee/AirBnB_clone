@@ -1,7 +1,7 @@
 #!usr/bin/env python3
 """Module for testing the amenity class"""
 
-from .models.amenity import Amenity
+from models.amenity import Amenity
 import unittest
 
 
