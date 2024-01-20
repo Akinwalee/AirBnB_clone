@@ -1,7 +1,7 @@
 #!usr/bin/env python3
 """Module for testing the city class"""
 
-from .models.city import City
+from models.city import City
 import unittest
 
 
