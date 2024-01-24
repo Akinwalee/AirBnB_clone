@@ -54,3 +54,7 @@ class FileStorage:
                 if f.read():
                     f.seek(0)
                     self.__objects = json.load(f)
+
+    def get_obj(self):
+        """get the private class variables"""
+        return (self.__objects, self.__file_path)

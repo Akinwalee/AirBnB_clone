@@ -1,7 +1,7 @@
 #!usr/bin/env python3
 """Module for testing the place class"""
 
-from .models.place import Place
+from models.place import Place
 import unittest
 
 
