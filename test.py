@@ -59,22 +59,15 @@ try:
     os.remove(file_path)
 except:
     pass
-print("all before save")
-print(storage.all())
 storage.save()
-print("all after save")
-print(storage.all())
+
 try:
     fs._FileStorage__objects.clear()
 except:
     pass
 storage.reload()
-print("all after reload")
-print(storage.all())
 
 all_reloaded2 = storage.all()
-print("All ids is: ")
-print(ids)
 
 if len(all_reloaded2.keys()) != len(ids):
     print("Missing after reload 2")
