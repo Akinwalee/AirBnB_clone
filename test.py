@@ -21,7 +21,7 @@ except:
 ids = []
 
 # First create
-for i in range(1):
+for i in range(2):
     bm = BaseModel()
     bm.updated_at = datetime.utcnow()
     fs.new(bm)
