@@ -59,7 +59,7 @@ try:
     os.remove(file_path)
 except:
     pass
-storage.save()
+# storage.save()
 try:
     fs._FileStorage__objects.clear()
 except:
