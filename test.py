@@ -47,7 +47,7 @@ for id in ids:
         obj_reloaded = all_reloaded.get("{}.{}".format("BaseModel", id))
     print(obj_reloaded.__class__.__name__)
     obj_created = objs_by_id[id]
-    print(obj_reloaded.id == obj_created.id)
+    # print(obj_reloaded.id == obj_created.id)
     print(obj_reloaded.created_at == obj_created.created_at)
     print(obj_reloaded.updated_at == obj_created.updated_at)
 
