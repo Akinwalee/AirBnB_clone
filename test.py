@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 import os
 from datetime import datetime
 from models.engine.file_storage import FileStorage
@@ -60,20 +60,19 @@ try:
 except:
     pass
 storage.save()
-
 try:
     fs._FileStorage__objects.clear()
 except:
     pass
 storage.reload()
 
-all_reloaded2 = storage.all()
+all_reloaded = storage.all()
 
-if len(all_reloaded2.keys()) != len(ids):
+if len(all_reloaded.keys()) != len(ids):
     print("Missing after reload 2")
 
 for id in ids:
-    if all_reloaded2.get(id) is None and all_reloaded2.get("{}.{}".format("BaseModel", id)) is None:
+    if all_reloaded.get(id) is None and all_reloaded.get("{}.{}".format("BaseModel", id)) is None:
         print("Missing 2 {}".format(id))
 
 try:
