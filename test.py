@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 import os
 from datetime import datetime
 from models.engine.file_storage import FileStorage
