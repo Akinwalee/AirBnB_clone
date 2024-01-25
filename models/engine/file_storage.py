@@ -30,15 +30,15 @@ class FileStorage:
     def save(self):
         """Serializes and saves __object to JSON file \
                 __file_path"""
-        path = self.__file_path
+        path = FileStorage.__file_path
         if os.path.exists(path):
             with open("{}".format(path), "r", encoding="utf-8") as f:
                 current = json.load(f)
         else:
             current = {}
 
-        current.update(self.__objects)
-        with open("{}".format(self.__file_path), "w", encoding="utf-8") as f:
+        current.update(FileStorage.__objects)
+        with open("{}".format(FileStorage.__file_path), "w", encoding="utf-8") as f:
 
             """current = json.load(f) if f.read() else {} \
             current.update(self.__objects)"""
@@ -48,12 +48,12 @@ class FileStorage:
         """Desrializes JSON file __file_path to \
                 __objects"""
 
-        path = self.__file_path
+        path = FileStorage.__file_path
         if os.path.exists(path):
             with open("{}".format(path), "r", encoding="utf-8") as f:
                 if f.read():
                     f.seek(0)
-                    self.__objects = json.load(f)
+                    FileStorage.__objects = json.load(f)
 
     def get_obj(self):
         """get the private class variables"""
