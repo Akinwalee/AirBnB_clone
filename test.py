@@ -53,7 +53,7 @@ storage.reload()
 # Second create
 for i in range(2):
     bm = BaseModel()
-    bm.save()
+    storage.new(bm)
     ids.append(bm.id)
 try:
     os.remove(file_path)
