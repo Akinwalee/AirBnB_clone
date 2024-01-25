@@ -59,24 +59,24 @@ try:
     os.remove(file_path)
 except:
     pass
-# storage.save()
+storage.save()
 try:
     fs._FileStorage__objects.clear()
 except:
     pass
 storage.reload()
 
-all_reloaded = storage.all()
+all_reloaded2 = storage.all()
 print("All reloaded is: ")
-print(all_reloaded)
+print(all_reloaded2)
 print("All ids is: ")
 print(ids)
 
-if len(all_reloaded.keys()) != len(ids):
+if len(all_reloaded2.keys()) != len(ids):
     print("Missing after reload 2")
 
 for id in ids:
-    if all_reloaded.get(id) is None and all_reloaded.get("{}.{}".format("BaseModel", id)) is None:
+    if all_reloaded2.get(id) is None and all_reloaded2.get("{}.{}".format("BaseModel", id)) is None:
         print("Missing 2 {}".format(id))
 
 try:
