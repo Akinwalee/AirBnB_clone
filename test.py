@@ -21,7 +21,7 @@ except:
 ids = []
 
 # First create
-for i in range(2):
+for i in range(1):
     bm = BaseModel()
     bm.updated_at = datetime.utcnow()
     fs.new(bm)
@@ -53,7 +53,7 @@ storage.reload()
 # Second create
 for i in range(2):
     bm = BaseModel()
-    storage.new(bm)
+    bm.save()
     ids.append(bm.id)
 try:
     os.remove(file_path)
