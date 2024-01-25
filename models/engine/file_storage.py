@@ -50,7 +50,7 @@ class FileStorage:
 
         path = self.__file_path
         if os.path.exists(path):
-            with open("{}".format(path), "r+", encoding="utf-8") as f:
+            with open("{}".format(path), "r", encoding="utf-8") as f:
                 if f.read():
                     f.seek(0)
                     self.__objects = json.load(f)
