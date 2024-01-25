@@ -39,7 +39,8 @@ except:
 fs.reload()
 
 all_reloaded = fs.all()
-print("All reloaded is: \n".format(all_reloaded))
+print("All reloaded is: \n")
+print(all_reloaded)
 
 if len(all_reloaded.keys()) != len(ids):
     print("Missing after reload 1")
@@ -68,7 +69,8 @@ except:
 storage.reload()
 
 all_reloaded = storage.all()
-print("All reloaded is: \n".format(all_reloaded))
+print("All reloaded is: \n")
+print(all_reloaded)
 
 if len(all_reloaded.keys()) != len(ids):
     print("Missing after reload 2")
