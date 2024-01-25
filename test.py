@@ -55,20 +55,23 @@ for i in range(2):
     bm = BaseModel()
     bm.save()
     ids.append(bm.id)
+    print(bm.id)
 try:
     os.remove(file_path)
 except:
     pass
 storage.save()
+print("all after save")
+print(storage.all())
 try:
     fs._FileStorage__objects.clear()
 except:
     pass
 storage.reload()
+print("all after reload")
+print(storage.all())
 
 all_reloaded2 = storage.all()
-print("All reloaded2 is: ")
-print(all_reloaded2)
 print("All ids is: ")
 print(ids)
 
