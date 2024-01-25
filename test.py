@@ -60,6 +60,8 @@ try:
     os.remove(file_path)
 except:
     pass
+print("all before save")
+print(storage.all())
 storage.save()
 print("all after save")
 print(storage.all())
