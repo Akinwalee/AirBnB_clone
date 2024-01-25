@@ -67,7 +67,7 @@ except:
 storage.reload()
 
 all_reloaded2 = storage.all()
-print("All reloaded is: ")
+print("All reloaded2 is: ")
 print(all_reloaded2)
 print("All ids is: ")
 print(ids)
