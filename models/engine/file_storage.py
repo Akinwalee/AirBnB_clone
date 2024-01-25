@@ -10,7 +10,7 @@ class FileStorage:
             objects to json string and store in \
             a file, and vice versa"""
 
-    __file_path = "storage.json"
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):
