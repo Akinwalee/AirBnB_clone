@@ -99,11 +99,11 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print("** no instance found **")
             else:
-                print("** class name doesn't exist **")
+                print("** class doesn't exist **")
         elif len(line_list) == 1:
             print("** instance id missing **")
         else:
-            print("** class name is missing **")
+            print("** class name missing **")
 
     def do_destroy(self, line):
         """Delete an object by class name and object id"""
@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(line_list) == 1:
             print("** instance id missing **")
         else:
-            print("** class name is missing **")
+            print("** class name missing **")
 
     def do_all(self, line):
         """Prints the string representation of all instances \
