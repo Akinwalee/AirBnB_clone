@@ -55,6 +55,8 @@ class FileStorage:
                     f.seek(0)
                     current = json.load(f)
                     FileStorage.__objects = to_model(current)
+                    print("current\n {}".format(current))
+                    print("Object\n {}".format(FileStorage.__objects))
 
     def get_obj(self):
         """get the private class variables"""
