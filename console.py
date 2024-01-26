@@ -151,7 +151,7 @@ class HBNBCommand(cmd.Cmd):
                     all_list.append(Amenity(**obj_dict[key]))
                 else:
                     all_list.append(Review(**obj_dict[key]))
-                all_list.append(value)
+                # all_list.append(value)
             print(all_list)
 
     def do_update(self, line):
