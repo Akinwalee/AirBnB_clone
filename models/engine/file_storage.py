@@ -39,7 +39,9 @@ class FileStorage:
 
         current.update(FileStorage.__objects)
         with open("{}".format(FileStorage.__file_path), "w", encoding="utf-8") as f:
-            json.dump(current, f)
+            serialized_objects = {key: obj.to_dict() for key, obj in current.items()}
+            json.dump(serialized_objects, f)
+            # json.dump(current, f)
 
     def reload(self):
         """Desrializes JSON file __file_path to \
