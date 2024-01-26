@@ -118,7 +118,6 @@ class HBNBCommand(cmd.Cmd):
                 key = "{}.{}".format(class_name, class_id)
                 if key in obj_list:
                     del obj_list[key]
-                    # self.save_destroy()
                     storage.save()
                 else:
                     print("** no instance found **")
@@ -194,34 +193,28 @@ class HBNBCommand(cmd.Cmd):
                         model = Review(**obj_dict[key])
                     setattr(model, attribute, value)
                     model.updated_at = self.date.now()
-                    self.handle_save(model, key)
+                    # self.handle_save(model, key)
+                    model.save()
                 else:
                     print("** no instance found **")
             else:
                 print("** class doesn't exist **")
 
-    def handle_save(self, model, key):
-        """handles the saving for update"""
-
-        obj, path = storage.get_obj()
-        obj[key] = model.to_dict()
-
-        if os.path.exists(path):
-            with open("{}".format(path), "r", encoding="utf-8") as f:
-                current = json.load(f)
-        else:
-            current = {}
-
-        current.update(obj)
-        with open("{}".format(path), "w", encoding="utf-8") as f:
-            json.dump(current, f)
-    
-    # def save_destroy(self):
-    #     """handles saving after destroy"""
+    # def handle_save(self, model, key):
+    #     """handles the saving for update"""
 
     #     obj, path = storage.get_obj()
+    #     obj[key] = model.to_dict()
+
+    #     if os.path.exists(path):
+    #         with open("{}".format(path), "r", encoding="utf-8") as f:
+    #             current = json.load(f)
+    #     else:
+    #         current = {}
+
+    #     current.update(obj)
     #     with open("{}".format(path), "w", encoding="utf-8") as f:
-    #         json.dump(obj, f)
+    #         json.dump(current, f)
 
 
 
