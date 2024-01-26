@@ -3,7 +3,8 @@
 
 import json
 import os
-from ..base_model import BaseModel
+from .models_wrapper import BaseModel, User, State, City
+from .models_wrapper import Review, Amenity, Place
 
 
 class FileStorage:
