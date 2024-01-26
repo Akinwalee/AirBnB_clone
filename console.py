@@ -194,12 +194,11 @@ class HBNBCommand(cmd.Cmd):
                     setattr(model, attribute, value)
                     model.updated_at = self.date.now()
                     self.handle_save(model, key)
-                    model.save()
                 else:
                     print("** no instance found **")
             else:
                 print("** class doesn't exist **")
-    
+
     def handle_save(self, model, key):
         """handles the saving for update"""
 
@@ -215,6 +214,7 @@ class HBNBCommand(cmd.Cmd):
         current.update(obj)
         with open("{}".format(path), "w", encoding="utf-8") as f:
             json.dump(current, f)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
