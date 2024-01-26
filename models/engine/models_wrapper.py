@@ -1,46 +1,27 @@
-# models_wrapper.py
+from ..base_model import BaseModel
+from ..amenity import Amenity
+from ..city import City
+from ..place import Place
+from ..review import Review
+from ..state import State
+from ..user import User
 
 def to_model(objs_dict):
     objects = {}
-
-    class_mapping = {
-        "BaseModel": "BaseModel",
-        "User": "User",
-        "State": "State",
-        "City": "City",
-        "Amenity": "Amenity",
-        "Place": "Place",
-        "Review": "Review",
-    }
-
     for key, value in objs_dict.items():
-        class_name = value["__class__"]
-        model_class_name = class_mapping.get(class_name, "BaseModel")
-
-        # Lazy loading: import the class only when needed
-        if model_class_name == "BaseModel":
-            from ..base_model import BaseModel
-            model_class = BaseModel
-        elif model_class_name == "User":
-            from ..user import User
-            model_class = User
-        elif model_class_name == "State":
-            from ..state import State
-            model_class = State
-        elif model_class_name == "City":
-            from ..city import City
-            model_class = City
-        elif model_class_name == "Amenity":
-            from ..amenity import Amenity
-            model_class = Amenity
-        elif model_class_name == "Place":
-            from ..place import Place
-            model_class = Place
-        elif model_class_name == "Review":
-            from ..review import Review
-            model_class = Review
-
-        model = model_class(value)
-        objects[key] = model
-
-    return objects
+        if value["__class__"] == "BaseModel":
+            model = BaseModel(value)
+        elif value["__class__"] == "User":
+            model = User(value)
+        elif value["__class__"] == "State":
+            model = State(value)
+        elif value["__class__"] == "City":
+            model = City(value)
+        elif value["__class__"] == "Amenity":
+            model = Amenity(value)
+        elif value["__class__"] == "Place":
+            model = Place(value)
+        else:
+            model = Review(value)
+        objects.update({key: model})
+    return (objects)
