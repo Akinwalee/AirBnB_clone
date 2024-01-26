@@ -62,7 +62,7 @@ class FileStorage:
                 if f.read():
                     f.seek(0)
                     current = json.load(f)
-                    for key, value in current:
+                    for key, value in current.items():
                         if value["__class__"] == "BaseModel":
                             model = BaseModel(value)
                         elif value["__class__"] == "User":
