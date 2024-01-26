@@ -12,6 +12,15 @@ class FileStorage:
 
     __file_path = "storage.json"
     __objects = {}
+    classes = [
+            "BaseModel",
+            "User",
+            "State",
+            "City",
+            "Amenity",
+            "Place",
+            "Review"
+            ]
 
     def all(self):
         """Returns __object (the dictionary containing all \
@@ -52,7 +61,23 @@ class FileStorage:
             with open("{}".format(path), "r+", encoding="utf-8") as f:
                 if f.read():
                     f.seek(0)
-                    FileStorage.__objects = json.load(f)
+                    current = json.load(f)
+                    for key, value in current:
+                        if value["__class__"] == "BaseModel":
+                            model = BaseModel(value)
+                        elif value["__class__"] == "User":
+                            model = User(value)
+                        elif value["__class__"] == "State":
+                            model = State(value)
+                        elif value["__class__"] == "City":
+                            model = City(value)
+                        elif value["__class__"] == "Amenity":
+                            model = Amenity(value)
+                        elif value["__class__"] == "Place":
+                            model = Place(value)
+                        else:
+                            model = Review(value)
+                        FileStorage.__objects.update({key: model})
 
     def get_obj(self):
         """get the private class variables"""
