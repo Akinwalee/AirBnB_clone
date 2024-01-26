@@ -193,8 +193,9 @@ class HBNBCommand(cmd.Cmd):
                         model = Review(**obj_dict[key])
                     setattr(model, attribute, value)
                     model.updated_at = self.date.now()
-                    self.handle_save(model, key)
-                    model.save()
+                    # self.handle_save(model, key)
+                    # model.save()
+                    storage.save()
                 else:
                     print("** no instance found **")
             else:
