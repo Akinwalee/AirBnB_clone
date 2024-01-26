@@ -118,8 +118,7 @@ class HBNBCommand(cmd.Cmd):
                 key = "{}.{}".format(class_name, class_id)
                 if key in obj_list:
                     del obj_list[key]
-                    # self.save_destroy()
-                    storage.save()
+                    self.save_destroy()
                 else:
                     print("** no instance found **")
             else:
@@ -216,12 +215,12 @@ class HBNBCommand(cmd.Cmd):
         with open("{}".format(path), "w", encoding="utf-8") as f:
             json.dump(current, f)
     
-    # def save_destroy(self):
-    #     """handles saving after destroy"""
+    def save_destroy(self):
+        """handles saving after destroy"""
 
-    #     obj, path = storage.get_obj()
-    #     with open("{}".format(path), "w", encoding="utf-8") as f:
-    #         json.dump(obj, f)
+        obj, path = storage.get_obj()
+        with open("{}".format(path), "w", encoding="utf-8") as f:
+            json.dump(obj, f)
 
 
 
