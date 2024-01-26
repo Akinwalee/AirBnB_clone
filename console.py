@@ -136,21 +136,22 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             all_list = []
-            for key in obj_dict.keys():
-                if "BaseModel" in key:
-                    all_list.append(str(BaseModel(**obj_dict[key])))
-                elif "User" in key:
-                    all_list.append(str(User(**obj_dict[key])))
-                elif "State" in key:
-                    all_list.append(str(State(**obj_dict[key])))
-                elif "City" in key:
-                    all_list.append(str(City(**obj_dict[key])))
-                elif "Place" in key:
-                    all_list.append(str(Place(**obj_dict[key])))
-                elif "Amenity" in key:
-                    all_list.append(str(Amenity(**obj_dict[key])))
-                else:
-                    all_list.append(str(Review(**obj_dict[key])))
+            for key, value in obj_dict.items():
+                # if "BaseModel" in key:
+                #     all_list.append(str(BaseModel(**obj_dict[key])))
+                # elif "User" in key:
+                #     all_list.append(str(User(**obj_dict[key])))
+                # elif "State" in key:
+                #     all_list.append(str(State(**obj_dict[key])))
+                # elif "City" in key:
+                #     all_list.append(str(City(**obj_dict[key])))
+                # elif "Place" in key:
+                #     all_list.append(str(Place(**obj_dict[key])))
+                # elif "Amenity" in key:
+                #     all_list.append(str(Amenity(**obj_dict[key])))
+                # else:
+                #     all_list.append(str(Review(**obj_dict[key])))
+                all_list.append(value)
             print(all_list)
 
     def do_update(self, line):
