@@ -17,7 +17,7 @@ class FileStorage:
         """Returns __object (the dictionary containing all \
                 objects in the file storage)"""
 
-        return (self.__objects)
+        return (FileStorage.__objects)
 
     def new(self, obj):
         """Creates a new object obj in __objects \
@@ -25,36 +25,33 @@ class FileStorage:
 
         obj_dict = obj.to_dict()
         key = "{}.{}".format(obj_dict["__class__"], obj_dict["id"])
-        self.__objects[key] = obj_dict
+        FileStorage.__objects[key] = obj_dict
 
     def save(self):
         """Serializes and saves __object to JSON file \
                 __file_path"""
-        path = self.__file_path
+        path = FileStorage.__file_path
         if os.path.exists(path):
             with open("{}".format(path), "r", encoding="utf-8") as f:
                 current = json.load(f)
         else:
             current = {}
 
-        current.update(self.__objects)
-        with open("{}".format(self.__file_path), "w", encoding="utf-8") as f:
-
-            """current = json.load(f) if f.read() else {} \
-            current.update(self.__objects)"""
+        current.update(FileStorage.__objects)
+        with open("{}".format(FileStorage.__file_path), "w", encoding="utf-8") as f:
             json.dump(current, f)
 
     def reload(self):
         """Desrializes JSON file __file_path to \
                 __objects"""
 
-        path = self.__file_path
+        path = FileStorage.__file_path
         if os.path.exists(path):
             with open("{}".format(path), "r+", encoding="utf-8") as f:
                 if f.read():
                     f.seek(0)
-                    self.__objects = json.load(f)
+                    FileStorage.__objects = json.load(f)
 
     def get_obj(self):
         """get the private class variables"""
-        return (self.__objects, self.__file_path)
+        return (FileStorage.__objects, FileStorage.__file_path)

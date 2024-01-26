@@ -99,11 +99,11 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print("** no instance found **")
             else:
-                print("** class name doesn't exist **")
+                print("** class doesn't exist **")
         elif len(line_list) == 1:
             print("** instance id missing **")
         else:
-            print("** class name is missing **")
+            print("** class name missing **")
 
     def do_destroy(self, line):
         """Delete an object by class name and object id"""
@@ -118,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
                 key = "{}.{}".format(class_name, class_id)
                 if key in obj_list:
                     del obj_list[key]
-                    storage.save()
+                    self.save_destroy()
                 else:
                     print("** no instance found **")
             else:
@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(line_list) == 1:
             print("** instance id missing **")
         else:
-            print("** class name is missing **")
+            print("** class name missing **")
 
     def do_all(self, line):
         """Prints the string representation of all instances \
@@ -215,6 +215,12 @@ class HBNBCommand(cmd.Cmd):
         with open("{}".format(path), "w", encoding="utf-8") as f:
             json.dump(current, f)
 
+    def save_destroy(self):
+        """handles saving after destroy"""
+
+        obj, path = storage.get_obj()
+        with open("{}".format(path), "w", encoding="utf-8") as f:
+            json.dump(obj, f)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
