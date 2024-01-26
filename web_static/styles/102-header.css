@@ -1,0 +1,15 @@
+header{
+        background-color:#ffffff;
+        height: 70px;
+        width: 100%;
+        border-bottom: 1px solid #cccccc;
+}
+
+header .logo-container{
+        width: 150px;
+        height: 70px;
+        background-image: url("images/logo-webstatic.png");
+        background-size: 130px;
+        background-position: 20px center;
+        background-repeat: no-repeat;
+}
