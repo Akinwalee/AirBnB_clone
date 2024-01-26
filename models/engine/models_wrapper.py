@@ -1,6 +1,3 @@
-# models_wrapper.py
-
-
 from ..base_model import BaseModel
 from ..user import User
 from ..state import State
