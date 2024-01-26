@@ -1,57 +1,93 @@
 #!/usr/bin/python3
+import inspect
+import io
+import sys
+import cmd
+import shutil
+
+"""
+ Cleanup file storage
+"""
 import os
-from models.engine.file_storage import FileStorage
-from models.base_model import BaseModel
-
-fs = FileStorage()
 file_path = "file.json"
-try:
-    file_path = FileStorage._FileStorage__file_path
-except:
-    pass
-try:
+if not os.path.exists(file_path):
+    try:
+        from models.engine.file_storage import FileStorage
+        file_path = FileStorage._FileStorage__file_path
+    except:
+        pass
+if os.path.exists(file_path):
     os.remove(file_path)
-except:
-    pass
-try:
-    fs._FileStorage__objects.clear()
-except:
-    pass
-ids = []
-objs_by_id = {}
-for i in range(10):
-    bm = BaseModel()
-    fs.new(bm)
-    bm.save()
-    ids.append(bm.id)
-    objs_by_id[bm.id] = bm
 
-try:
-    fs._FileStorage__objects.clear()
-except:
-    pass
-fs.reload()
 
-all_reloaded = fs.all()
+"""
+ Backup console file
+"""
+if os.path.exists("tmp_console_main.py"):
+    shutil.copy("tmp_console_main.py", "console.py")
+shutil.copy("console.py", "tmp_console_main.py")
 
-if len(all_reloaded.keys()) != len(ids):
-    print("Missing after reload")
+"""
+ Updating console to remove "__main__"
+"""
+with open("tmp_console_main.py", "r") as file_i:
+    console_lines = file_i.readlines()
+    with open("console.py", "w") as file_o:
+        in_main = False
+        for line in console_lines:
+            if "__main__" in line:
+                in_main = True
+            elif in_main:
+                if "cmdloop" not in line:
+                    file_o.write(line.lstrip("    ")) 
+            else:
+                file_o.write(line)
 
-for id in ids:
-    if all_reloaded.get(id) is None and all_reloaded.get("{}.{}".format("BaseModel", id)) is None:
-        print("Missing {}".format(id))
+import console
+from models import storage
 
-for id in ids:
-    obj_reloaded = all_reloaded.get(id)
-    if obj_reloaded is None:
-        obj_reloaded = all_reloaded.get("{}.{}".format("BaseModel", id))
-    print(obj_reloaded.__class__.__name__)
-    obj_created = objs_by_id[id]
-    print(obj_reloaded.id == obj_created.id)
-    print(obj_reloaded.created_at == obj_created.created_at)
-    print(obj_reloaded.updated_at == obj_created.updated_at)
+"""
+ Create console
+"""
+console_obj = "HBNBCommand"
+for name, obj in inspect.getmembers(console):
+    if inspect.isclass(obj) and issubclass(obj, cmd.Cmd):
+        console_obj = obj
 
-try:
-    os.remove(file_path)
-except Exception as e:
-    pass
+my_console = console_obj(stdout=io.StringIO(), stdin=io.StringIO())
+my_console.use_rawinput = False
+
+"""
+ Exec command
+"""
+def exec_command(my_console, the_command, last_lines = 1):
+    my_console.stdout = io.StringIO()
+    real_stdout = sys.stdout
+    sys.stdout = my_console.stdout
+    the_command = my_console.precmd(the_command)
+    my_console.onecmd(the_command)
+    sys.stdout = real_stdout
+    lines = my_console.stdout.getvalue().split("\n")
+    return "\n".join(lines[(-1*(last_lines+1)):-1])
+
+"""
+ Tests
+"""
+result = exec_command(my_console, "create BaseModel")
+if result is None or result == "":
+    print("FAIL: No ID retrieved")
+    
+with open(file_path, "r") as file:
+    s_file = file.read()
+    if result not in s_file:
+        print("FAIL: New ID not in the JSON file")
+
+model_id = result
+exec_command(my_console, "destroy BaseModel {}".format(model_id))
+with open(file_path, "r") as file:
+    s_file = file.read()
+    if model_id in s_file:
+        print("FAIL: New ID is still in the JSON file")
+print("OK", end="")
+
+shutil.copy("tmp_console_main.py", "console.py")
