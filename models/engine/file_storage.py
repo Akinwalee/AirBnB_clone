@@ -3,8 +3,7 @@
 
 import json
 import os
-from .models_wrapper import BaseModel, User, State, City
-from .models_wrapper import Review, Amenity, Place
+from .models_wrapper import to_model
 
 
 class FileStorage:
@@ -14,15 +13,6 @@ class FileStorage:
 
     __file_path = "storage.json"
     __objects = {}
-    classes = [
-            "BaseModel",
-            "User",
-            "State",
-            "City",
-            "Amenity",
-            "Place",
-            "Review"
-            ]
 
     def all(self):
         """Returns __object (the dictionary containing all \
@@ -64,22 +54,7 @@ class FileStorage:
                 if f.read():
                     f.seek(0)
                     current = json.load(f)
-                    for key, value in current.items():
-                        if value["__class__"] == "BaseModel":
-                            model = BaseModel(value)
-                        elif value["__class__"] == "User":
-                            model = User(value)
-                        elif value["__class__"] == "State":
-                            model = State(value)
-                        elif value["__class__"] == "City":
-                            model = City(value)
-                        elif value["__class__"] == "Amenity":
-                            model = Amenity(value)
-                        elif value["__class__"] == "Place":
-                            model = Place(value)
-                        else:
-                            model = Review(value)
-                        FileStorage.__objects.update({key: model})
+                    FileStorage.__objects = to_model(current)
 
     def get_obj(self):
         """get the private class variables"""
