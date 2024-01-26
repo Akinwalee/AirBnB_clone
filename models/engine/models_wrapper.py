@@ -3,7 +3,6 @@ def to_model(objs_dict):
     objects = {}
     for key, value in objs_dict.items():
         class_name = value["__class__"]
-        model_class_name = class_mapping.get(class_name, "BaseModel")
 
         # Lazy loading: import the class only when needed
         if model_class_name == "BaseModel":
