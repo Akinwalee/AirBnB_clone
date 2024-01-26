@@ -53,9 +53,9 @@ class FileStorage:
             with open("{}".format(path), "r+", encoding="utf-8") as f:
                 if f.read():
                     f.seek(0)
-                    # current = json.load(f)
-                    # FileStorage.__objects = to_model(current)
-                    FileStorage.__objects = json.load(f)
+                    current = json.load(f)
+                    FileStorage.__objects = to_model(current)
+                    # FileStorage.__objects = json.load(f)
 
     def get_obj(self):
         """get the private class variables"""
