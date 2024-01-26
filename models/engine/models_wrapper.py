@@ -1,5 +1,6 @@
 # models_wrapper.py
 
+
 def to_model(objs_dict):
     objects = {}
 
@@ -39,7 +40,6 @@ def to_model(objs_dict):
         elif model_class_name == "Review":
             from ..review import Review
             model_class = Review
-
         model = model_class(value)
         objects[key] = model
 
