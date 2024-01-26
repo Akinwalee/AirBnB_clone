@@ -117,8 +117,9 @@ class HBNBCommand(cmd.Cmd):
             if class_name in self.classes:
                 key = "{}.{}".format(class_name, class_id)
                 if key in obj_list:
-                    del obj_list[key]
-                    # storage.save()
+                    del storage.get_obj()[0][key]
+                    # obj_list[key]
+                    storage.save()
                 else:
                     print("** no instance found **")
             else:
