@@ -25,7 +25,7 @@ class FileStorage:
 
         obj_dict = obj.to_dict()
         key = "{}.{}".format(obj_dict["__class__"], obj_dict["id"])
-        FileStorage.__objects[key] = obj_dict
+        FileStorage.__objects[key] = obj
 
     def save(self):
         """Serializes and saves __object to JSON file \
