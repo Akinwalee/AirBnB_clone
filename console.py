@@ -167,7 +167,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         elif len(line_list) == 1:
             print("** instance id missing **")
-        elif len(line_list) == 2:
+        elif len(line_list) == 2 and line_list[1] != "":
             print("** attribute name missing **")
         elif len(line_list) == 3 and not isinstance(eval(line_list[2]), dict):
             print("** value missing **")
@@ -178,7 +178,7 @@ class HBNBCommand(cmd.Cmd):
             if len(line_list) == 3:
                 attr = eval(line_list[2])
             else:
-                attr = {eval(line_list[2]): eval(line_list[4])}
+                attr = {eval(line_list[2]): eval(line_list[3])}
                 
             if class_name in self.classes:
                 key = "{}.{}".format(class_name, class_id)
@@ -243,17 +243,19 @@ class HBNBCommand(cmd.Cmd):
 
         if method.startswith("show") or method.startswith("destroy"):
             match = re.search(r'"(.+)"', method)
-            id = match.group(1)
-            arg = class_name + " " + id
-            if method.startswith("show"):
-                self.do_show(arg)
-            else:
-                self.do_destroy(arg)
+            if type(match) != "None":
+                id = match.group(1)
+                arg = class_name + " " + id
+                if method.startswith("show"):
+                    self.do_show(arg)
+                else:
+                    self.do_destroy(arg)
         if method.startswith("update"):
             match = re.search(r'\((.+)\)', method)
-            arg = match.group(1)
-            args = class_name + ", " + arg
-            self.do_update(args)
+            if type(match) != "None"
+                arg = match.group(1)
+                args = class_name + ", " + arg
+                self.do_update(args)
     
 
     def c_all(self, class_name):
