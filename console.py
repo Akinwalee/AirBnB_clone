@@ -221,6 +221,38 @@ class HBNBCommand(cmd.Cmd):
         obj, path = storage.get_obj()
         with open("{}".format(path), "w", encoding="utf-8") as f:
             json.dump(obj, f)
+    
+    def default(self, line):
+    """Handles other function usage"""
+    
+    line_list = line.split(".")
+    print(line_list)
+    
+    class_name, method = line_list
+    
+    if method == "all()":
+        print(c_all(class_name))
+    if method == "count()":
+        print(len(c_all(class_name)))
+        
+    if method.startswith("show") or method.startswith("destroy"):
+        match = re.search(r'"(.+)"', method)
+        id = match.group(1)
+        if method.startswith("show"):
+            do_show(class_name, id)
+        else:
+            do_destroy(class_name, id)
+    
+
+    def c_all(self, class_name):
+        """Handles alternative all call"""
+
+        obj_dict = storage.all()
+        all_list = []
+        for key, value in obj_dict.keys():
+            if key == class_name:
+                all_list.append(str(class_name(**value)))
+        return (all_list)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
