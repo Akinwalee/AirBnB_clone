@@ -231,9 +231,9 @@ class HBNBCommand(cmd.Cmd):
         class_name, method = line_list
         
         if method == "all()":
-            print(c_all(class_name))
+            print(self.c_all(class_name))
         if method == "count()":
-            print(len(c_all(class_name)))
+            print(len(self.c_all(class_name)))
             
         if method.startswith("show") or method.startswith("destroy"):
             match = re.search(r'"(.+)"', method)
