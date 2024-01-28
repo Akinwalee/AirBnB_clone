@@ -155,11 +155,13 @@ class HBNBCommand(cmd.Cmd):
             print(all_list)
 
     def do_update(self, line):
-        """Update instance details based on class name and id"""
-
+    """Update instance details based on class name and id"""
         obj_dict = storage.all()
-        # Split the arguments into a list
-        line_list = line.split()
+
+        if "," in line:
+            line_list = line.split(",")
+        else:
+            line_list = line.split()
 
         if len(line_list) == 0:
             print("** class name missing **")
@@ -167,14 +169,17 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         elif len(line_list) == 2:
             print("** attribute name missing **")
-        elif len(line_list) == 3:
+        elif len(line_list) == 3 and not isinstance(eval(line_list[2]), dict):
             print("** value missing **")
         else:
             class_name = line_list[0]
             class_id = line_list[1]
-            attribute = line_list[2]
-            value = eval(line_list[3])
-            key = "{}.{}".format(class_name, class_id)
+            
+            if len(line_list) == 3:
+                attr = eval(line_list[2])
+            else:
+                attr = {eval(line_list[2]): eval(line_list[4])}
+                
             if class_name in self.classes:
                 key = "{}.{}".format(class_name, class_id)
                 if key in obj_dict:
@@ -192,7 +197,8 @@ class HBNBCommand(cmd.Cmd):
                         model = Place(**obj_dict[key])
                     else:
                         model = Review(**obj_dict[key])
-                    setattr(model, attribute, value)
+                    for k, v in attr.items():
+                    setattr(model, k, v)
                     model.updated_at = self.date.now()
                     self.handle_save(model, key)
                 else:
@@ -243,6 +249,11 @@ class HBNBCommand(cmd.Cmd):
                 self.do_show(arg)
             else:
                 self.do_destroy(arg)
+        if method.startswith("update"):
+            match = re.search(r'\((.+)\)', method)
+            arg = match.group(1)
+            args = class_name + ", " + arg
+            self.do_update(args)
     
 
     def c_all(self, class_name):
