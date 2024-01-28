@@ -265,9 +265,9 @@ class HBNBCommand(cmd.Cmd):
                     args = class_name + ", " + arg
                     self.do_update(args)
             else:
-                cmd.Cmd.default(method)
+                cmd.Cmd.default(self, method)
         else:
-            cmd.Cmd.default(line)
+            cmd.Cmd.default(self, line)
     
 
     def c_all(self, class_name):
