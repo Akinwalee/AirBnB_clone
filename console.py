@@ -286,8 +286,8 @@ class HBNBCommand(cmd.Cmd):
         all_list = []
         if class_name not in obj_dict.keys():
             # print("** class doesn't exist **")
-            print(class_name == "User")
-            print(len(class_name))
+            print(class_name)
+            print(obj_dict.keys())
         else:
             for key, value in obj_dict.items():
                 if key.startswith(class_name):
