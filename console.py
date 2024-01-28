@@ -272,14 +272,14 @@ class HBNBCommand(cmd.Cmd):
 
         obj_dict = storage.all()
         class_dict = {
-                "BaseModel": BaseModel,
-                "User": User,
-                "State": State,
-                "City": City,
-                "Amenity": Amenity,
-                "Place": Place,
-                "Review": Review
-                }
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Place": Place,
+            "Review": Review
+            }
         all_list = []
         if class_name not in class_dict:
             print("** class doesn't exist **")
