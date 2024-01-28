@@ -231,7 +231,7 @@ class HBNBCommand(cmd.Cmd):
         class_name, method = line_list
         
         if method == "all()":
-            print(self.c_all(class_name))
+            print(f"[{', '.join(self.c_all(class_name))}]")
         if method == "count()":
             print(len(self.c_all(class_name)))
             
@@ -261,7 +261,7 @@ class HBNBCommand(cmd.Cmd):
         all_list = []
         for key, value in obj_dict.items():
             if key.startswith(class_name):
-                all_list.append(repr(classes[class_name](**value)))
+                all_list.append(str(classes[class_name](**value)))
         return (all_list)
 
 if __name__ == '__main__':
