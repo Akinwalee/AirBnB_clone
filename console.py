@@ -249,7 +249,7 @@ class HBNBCommand(cmd.Cmd):
 
         obj_dict = storage.all()
         all_list = []
-        for key, value in obj_dict.keys():
+        for key, value in obj_dict.items():
             if key == class_name:
                 all_list.append(str(class_name(**value)))
         return (all_list)
