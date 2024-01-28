@@ -254,7 +254,7 @@ class HBNBCommand(cmd.Cmd):
                     self.do_destroy(arg)
         if method.startswith("update"):
             match = re.search(r'\((.+)\)', method)
-            if match is None or match.group(1) == "":
+            if match is None or len(match.group(1)) == 2:
                 print("** instance id missing **")
             else:
                 arg = match.group(1)
