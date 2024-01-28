@@ -229,12 +229,12 @@ class HBNBCommand(cmd.Cmd):
         line_list = line.split(".")
         
         class_name, method = line_list
-        
+
         if method == "all()":
             print(f"[{', '.join(self.c_all(class_name))}]")
         if method == "count()":
             print(len(self.c_all(class_name)))
-            
+
         if method.startswith("show") or method.startswith("destroy"):
             match = re.search(r'"(.+)"', method)
             id = match.group(1)
@@ -249,7 +249,7 @@ class HBNBCommand(cmd.Cmd):
         """Handles alternative all call"""
 
         obj_dict = storage.all()
-        classes = {
+        class_dict = {
                 "BaseModel": BaseModel,
                 "User": User,
                 "State": State,
@@ -261,7 +261,7 @@ class HBNBCommand(cmd.Cmd):
         all_list = []
         for key, value in obj_dict.items():
             if key.startswith(class_name):
-                all_list.append(str(classes[class_name](**value)))
+                all_list.append(str(class_dict[class_name](**value)))
         return (all_list)
 
 if __name__ == '__main__':
