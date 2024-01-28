@@ -223,25 +223,25 @@ class HBNBCommand(cmd.Cmd):
             json.dump(obj, f)
     
     def default(self, line):
-    """Handles other function usage"""
+        """Handles other function usage"""
     
-    line_list = line.split(".")
-    print(line_list)
-    
-    class_name, method = line_list
-    
-    if method == "all()":
-        print(c_all(class_name))
-    if method == "count()":
-        print(len(c_all(class_name)))
+        line_list = line.split(".")
+        print(line_list)
         
-    if method.startswith("show") or method.startswith("destroy"):
-        match = re.search(r'"(.+)"', method)
-        id = match.group(1)
-        if method.startswith("show"):
-            do_show(class_name, id)
-        else:
-            do_destroy(class_name, id)
+        class_name, method = line_list
+        
+        if method == "all()":
+            print(c_all(class_name))
+        if method == "count()":
+            print(len(c_all(class_name)))
+            
+        if method.startswith("show") or method.startswith("destroy"):
+            match = re.search(r'"(.+)"', method)
+            id = match.group(1)
+            if method.startswith("show"):
+                do_show(class_name, id)
+            else:
+                do_destroy(class_name, id)
     
 
     def c_all(self, class_name):
