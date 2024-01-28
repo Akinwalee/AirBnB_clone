@@ -284,15 +284,14 @@ class HBNBCommand(cmd.Cmd):
                 "Review": Review
                 }
         all_list = []
-        if class_name not in obj_dict.keys():
-            # print("** class doesn't exist **")
-            print(class_name)
-            print(obj_dict.keys())
+        if class_name not in class_dict:
+            print("** class doesn't exist **")
         else:
             for key, value in obj_dict.items():
-                if key.startswith(class_name):
-                    all_list.append(str(class_dict[class_name](**value)))
+            if key.startswith(class_name):
+                all_list.append(str(class_dict[class_name](**value)))
             return (all_list)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
