@@ -181,7 +181,7 @@ class HBNBCommand(cmd.Cmd):
                 attr = {eval(line_list[2]): eval(line_list[3])}
                 
             if class_name in self.classes:
-                key = "{}.{}".format(class_name, class_id)
+                key = "{}.{}".format(class_name, eval(class_id))
                 # if key in obj_dict:
                 #     if class_name == "BaseModel":
                 #         model = BaseModel(**obj_dict[key])
