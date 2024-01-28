@@ -165,9 +165,9 @@ class HBNBCommand(cmd.Cmd):
 
         if len(line_list) == 0:
             print("** class name missing **")
-        elif len(line_list) == 1:
+        elif len(line_list) == 1 or (len(line_list) == 2 and line_list[1] == ""):
             print("** instance id missing **")
-        elif len(line_list) == 2 and line_list[1] != "":
+        elif len(line_list) == 2:
             print("** attribute name missing **")
         elif len(line_list) == 3 and not isinstance(eval(line_list[2]), dict):
             print("** value missing **")
