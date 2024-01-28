@@ -198,7 +198,7 @@ class HBNBCommand(cmd.Cmd):
                     else:
                         model = Review(**obj_dict[key])
                     for k, v in attr.items():
-                    setattr(model, k, v)
+                        setattr(model, k, v)
                     model.updated_at = self.date.now()
                     self.handle_save(model, key)
                 else:
