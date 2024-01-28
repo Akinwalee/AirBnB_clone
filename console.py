@@ -243,7 +243,7 @@ class HBNBCommand(cmd.Cmd):
 
         if method.startswith("show") or method.startswith("destroy"):
             match = re.search(r'"(.+)"', method)
-            if type(match) != "None":
+            if match != "" and not match.isispace():
                 id = match.group(1)
                 arg = class_name + " " + id
                 if method.startswith("show"):
@@ -252,7 +252,7 @@ class HBNBCommand(cmd.Cmd):
                     self.do_destroy(arg)
         if method.startswith("update"):
             match = re.search(r'\((.+)\)', method)
-            if type(match) != "None"
+            if match != "" and not match.isispace():
                 arg = match.group(1)
                 args = class_name + ", " + arg
                 self.do_update(args)
