@@ -155,7 +155,7 @@ class HBNBCommand(cmd.Cmd):
             print(all_list)
 
     def do_update(self, line):
-    """Update instance details based on class name and id"""
+        """Update instance details based on class name and id"""
         obj_dict = storage.all()
 
         if "," in line:
