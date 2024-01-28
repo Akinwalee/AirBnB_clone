@@ -72,18 +72,42 @@ def exec_command(my_console, the_command, last_lines = 1):
 """
  Tests
 """
-result = exec_command(my_console, "create BaseModel")
+model_class = "User"
+dict_update = { 'attribute_name_dict': "string_value_dict", 'attribute_name_dict_2': 333 }
+result = exec_command(my_console, "create {}".format(model_class))
 if result is None or result == "":
     print("FAIL: No ID retrieved")
     
 model_id = result
 
-result = exec_command(my_console, "BaseModel.all()")
-if result is None or result == "":
-    print("FAIL: no output")
+
+def model_has_attribute(my_console, model_class, model_id, dict_update):
+    is_found = False    
+    result = exec_command(my_console, "show {} {}".format(model_class, model_id))
+    if result is None or result == "":
+        pass  
+    elif model_id in result and "id" in result:
+        is_found = True
+        for k in dict_update.keys():
+            if k not in result:
+                is_found = False
+                break
+            if str(dict_update[k]) not in result:
+                is_found = False
+                break
+        
+    return is_found
+
+result = exec_command(my_console, "{}.update(\"{}\", {})".format(model_class, model_id, dict_update))
+if not model_has_attribute(my_console, model_class, model_id, dict_update):
+    result = exec_command(my_console, "{}.update({}, {})".format(model_class, model_id, dict_update))
+    if not model_has_attribute(my_console, model_class, model_id, dict_update):
+        result = exec_command(my_console, "{}.update(\"{}.{}\", {})".format(model_class, model_class, model_id, dict_update))
+    if not model_has_attribute(my_console, model_class, model_id, dict_update):
+        result = exec_command(my_console, "{}.update({}.{}, {})".format(model_class, model_class, model_id, dict_update))
     
-if model_id not in result:
-    print("FAIL: New ID not in the output")
+if not model_has_attribute(my_console, model_class, model_id, dict_update):
+    print("FAIL: model doesn't have new attribute")
     
 print("OK", end="")
 
