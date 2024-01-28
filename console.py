@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Defines te entry point of the command interpreter."""
 import cmd
+import os
+import json
+import datetime
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -15,7 +18,7 @@ from models.__init__ import storage
 class HBNBCommand(cmd.Cmd):
     """A simple console for manipulating object in the Airbnb project."""
 
-    prompt = "(hbnb)"
+    prompt = "(hbnb) "
     classes = [
             "BaseModel",
             "User",
@@ -25,6 +28,7 @@ class HBNBCommand(cmd.Cmd):
             "Place",
             "Review"
             ]
+    date = datetime.datetime
 
     def do_EOF(self, line):
         """Function quits the prgram with EOF."""
@@ -95,11 +99,11 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print("** no instance found **")
             else:
-                print("** class name doesn't exist **")
+                print("** class doesn't exist **")
         elif len(line_list) == 1:
             print("** instance id missing **")
         else:
-            print("** class name is missing **")
+            print("** class name missing **")
 
     def do_destroy(self, line):
         """Delete an object by class name and object id"""
@@ -114,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
                 key = "{}.{}".format(class_name, class_id)
                 if key in obj_list:
                     del obj_list[key]
-                    storage.save()
+                    self.save_destroy()
                 else:
                     print("** no instance found **")
             else:
@@ -122,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(line_list) == 1:
             print("** instance id missing **")
         else:
-            print("** class name is missing **")
+            print("** class name missing **")
 
     def do_all(self, line):
         """Prints the string representation of all instances \
@@ -170,19 +174,53 @@ class HBNBCommand(cmd.Cmd):
             attribute = line_list[2]
             value = eval(line_list[3])
             key = "{}.{}".format(class_name, class_id)
-            if class_name != "BaseModel":
-                print("** class doesn't exist **")
-            elif key not in obj_dict:
-                print("** no instance found **")
+            if class_name in self.classes:
+                key = "{}.{}".format(class_name, class_id)
+                if key in obj_dict:
+                    if class_name == "BaseModel":
+                        model = BaseModel(**obj_dict[key])
+                    elif class_name == "User":
+                        model = User(**obj_dict[key])
+                    elif class_name == "State":
+                        model = State(**obj_dict[key])
+                    elif class_name == "City":
+                        model = City(**obj_dict[key])
+                    elif class_name == "Amenity":
+                        model = Amenity(**obj_dict[key])
+                    elif class_name == "Place":
+                        model = Place(**obj_dict[key])
+                    else:
+                        model = Review(**obj_dict[key])
+                    setattr(model, attribute, value)
+                    model.updated_at = self.date.now()
+                    self.handle_save(model, key)
+                else:
+                    print("** no instance found **")
             else:
-                model = BaseModel(**obj_dict[key])
-                print("before setting attribute...")
-                print(model)
-                setattr(model, attribute, value)
-                print("after setting attribute...")
-                print(model.to_dict)
-                storage.save()
+                print("** class doesn't exist **")
 
+    def handle_save(self, model, key):
+        """handles the saving for update"""
+
+        obj, path = storage.get_obj()
+        obj[key] = model.to_dict()
+
+        if os.path.exists(path):
+            with open("{}".format(path), "r", encoding="utf-8") as f:
+                current = json.load(f)
+        else:
+            current = {}
+
+        current.update(obj)
+        with open("{}".format(path), "w", encoding="utf-8") as f:
+            json.dump(current, f)
+
+    def save_destroy(self):
+        """handles saving after destroy"""
+
+        obj, path = storage.get_obj()
+        with open("{}".format(path), "w", encoding="utf-8") as f:
+            json.dump(obj, f)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
