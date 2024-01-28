@@ -4,6 +4,7 @@ import cmd
 import os
 import json
 import datetime
+import re
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -226,7 +227,6 @@ class HBNBCommand(cmd.Cmd):
         """Handles other function usage"""
     
         line_list = line.split(".")
-        print(line_list)
         
         class_name, method = line_list
         
