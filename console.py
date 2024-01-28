@@ -158,10 +158,7 @@ class HBNBCommand(cmd.Cmd):
         """Update instance details based on class name and id"""
         obj_dict = storage.all()
 
-        if "," in line:
-            line_list = line.split(",")
-        else:
-            line_list = line.split()
+        line_list = line.split(",") if "," in line else line.split()
 
         if len(line_list) == 0:
             print("** class name missing **")
@@ -268,7 +265,7 @@ class HBNBCommand(cmd.Cmd):
                 cmd.Cmd.default(self, method)
         else:
             cmd.Cmd.default(self, line)
-    
+
 
     def c_all(self, class_name):
         """Handles alternative all call"""
