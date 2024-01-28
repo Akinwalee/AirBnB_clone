@@ -287,7 +287,7 @@ class HBNBCommand(cmd.Cmd):
         if class_name not in obj_dict.keys():
             # print("** class doesn't exist **")
             print(class_name)
-            print(len(class))
+            print(len(class_name))
         else:
             for key, value in obj_dict.items():
                 if key.startswith(class_name):
