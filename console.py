@@ -234,36 +234,40 @@ class HBNBCommand(cmd.Cmd):
     
         line_list = line.split(".")
         
-        class_name, method = line_list
+        if len(line_list) > 1:
+            class_name, method = line_list
 
-        if method == "all()":
-            all_list = self.c_all(class_name)
-            if all_list is not None:
-                print(f"[{', '.join(all_list)}]")
-        if method == "count()":
-            all_list = self.c_all(class_name)
-            if all_list is not None:
-                print(len(all_list))
-
-        if method.startswith("show") or method.startswith("destroy"):
-            match = re.search(r'"(.+)"', method)
-            if match is None:
-                print("** instance id missing **")
-            else:
-                id = match.group(1)
-                arg = class_name + " " + id
-                if method.startswith("show"):
-                    self.do_show(arg)
+            if method == "all()":
+                all_list = self.c_all(class_name)
+                if all_list is not None:
+                    print(f"[{', '.join(all_list)}]")
+            elif method == "count()":
+                all_list = self.c_all(class_name)
+                if all_list is not None:
+                    print(len(all_list))
+            elif method.startswith("show") or method.startswith("destroy"):
+                match = re.search(r'"(.+)"', method)
+                if match is None:
+                    print("** instance id missing **")
                 else:
-                    self.do_destroy(arg)
-        if method.startswith("update"):
-            match = re.search(r'\((.+)\)', method)
-            if match is None or len(match.group(1)) == 2:
-                print("** instance id missing **")
+                    id = match.group(1)
+                    arg = class_name + " " + id
+                    if method.startswith("show"):
+                        self.do_show(arg)
+                    else:
+                        self.do_destroy(arg)
+            elif method.startswith("update"):
+                match = re.search(r'\((.+)\)', method)
+                if match is None or len(match.group(1)) == 2:
+                    print("** instance id missing **")
+                else:
+                    arg = match.group(1)
+                    args = class_name + ", " + arg
+                    self.do_update(args)
             else:
-                arg = match.group(1)
-                args = class_name + ", " + arg
-                self.do_update(args)
+                cmd.Cmd.default(method)
+        else:
+            cmd.Cmd.default(line)
     
 
     def c_all(self, class_name):
