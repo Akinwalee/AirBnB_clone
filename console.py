@@ -248,10 +248,19 @@ class HBNBCommand(cmd.Cmd):
         """Handles alternative all call"""
 
         obj_dict = storage.all()
+        classes = {
+                "BaseModel": BaseModel,
+                "User": User,
+                "State": State,
+                "City": City,
+                "Amenity": Amenity,
+                "Place": Place,
+                "Review": Review
+                }
         all_list = []
         for key, value in obj_dict.items():
-            if key.startswith(class_name[:3]):
-                all_list.append(class_name(**value))
+            if key.startswith(class_name):
+                all_list.append(str(classes[class_name](**value)))
         return (all_list)
 
 if __name__ == '__main__':
