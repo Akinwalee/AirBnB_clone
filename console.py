@@ -261,7 +261,7 @@ class HBNBCommand(cmd.Cmd):
         all_list = []
         for key, value in obj_dict.items():
             if key.startswith(class_name):
-                all_list.append(__str__(classes[class_name](**value)))
+                all_list.append(repr(classes[class_name](**value)))
         return (all_list)
 
 if __name__ == '__main__':
