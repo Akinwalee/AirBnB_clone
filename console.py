@@ -182,27 +182,28 @@ class HBNBCommand(cmd.Cmd):
                 
             if class_name in self.classes:
                 key = "{}.{}".format(class_name, class_id)
-                if key in obj_dict:
-                    if class_name == "BaseModel":
-                        model = BaseModel(**obj_dict[key])
-                    elif class_name == "User":
-                        model = User(**obj_dict[key])
-                    elif class_name == "State":
-                        model = State(**obj_dict[key])
-                    elif class_name == "City":
-                        model = City(**obj_dict[key])
-                    elif class_name == "Amenity":
-                        model = Amenity(**obj_dict[key])
-                    elif class_name == "Place":
-                        model = Place(**obj_dict[key])
-                    else:
-                        model = Review(**obj_dict[key])
-                    for k, v in attr.items():
-                        setattr(model, k, v)
-                    model.updated_at = self.date.now()
-                    self.handle_save(model, key)
-                else:
-                    print("** no instance found **")
+                # if key in obj_dict:
+                #     if class_name == "BaseModel":
+                #         model = BaseModel(**obj_dict[key])
+                #     elif class_name == "User":
+                #         model = User(**obj_dict[key])
+                #     elif class_name == "State":
+                #         model = State(**obj_dict[key])
+                #     elif class_name == "City":
+                #         model = City(**obj_dict[key])
+                #     elif class_name == "Amenity":
+                #         model = Amenity(**obj_dict[key])
+                #     elif class_name == "Place":
+                #         model = Place(**obj_dict[key])
+                #     else:
+                #         model = Review(**obj_dict[key])
+                #     for k, v in attr.items():
+                #         setattr(model, k, v)
+                #     model.updated_at = self.date.now()
+                #     self.handle_save(model, key)
+                # else:
+                #     print("** no instance found **")
+                print(key)
             else:
                 print("** class doesn't exist **")
 
