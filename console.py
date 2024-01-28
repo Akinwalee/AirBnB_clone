@@ -158,7 +158,7 @@ class HBNBCommand(cmd.Cmd):
         """Update instance details based on class name and id"""
         obj_dict = storage.all()
 
-        line_list = line.split(",", 1) if "," in line else line.split()
+        line_list = line.split(",", 2) if "," in line else line.split()
 
         if len(line_list) == 0:
             print("** class name missing **")
