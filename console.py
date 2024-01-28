@@ -250,7 +250,7 @@ class HBNBCommand(cmd.Cmd):
         obj_dict = storage.all()
         all_list = []
         for key, value in obj_dict.items():
-            if key == class_name:
+            if key.startswith(class_name[:3]):
                 all_list.append(str(class_name(**value)))
         return (all_list)
 
