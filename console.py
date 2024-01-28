@@ -238,10 +238,11 @@ class HBNBCommand(cmd.Cmd):
         if method.startswith("show") or method.startswith("destroy"):
             match = re.search(r'"(.+)"', method)
             id = match.group(1)
+            arg = class_name + " " + id
             if method.startswith("show"):
-                self.do_show(class_name, id)
+                self.do_show(arg)
             else:
-                self.do_destroy(class_name, id)
+                self.do_destroy(arg)
     
 
     def c_all(self, class_name):
