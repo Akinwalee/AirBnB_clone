@@ -288,8 +288,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             for key, value in obj_dict.items():
-            if key.startswith(class_name):
-                all_list.append(str(class_dict[class_name](**value)))
+                if key.startswith(class_name):
+                    all_list.append(str(class_dict[class_name](**value)))
             return (all_list)
 
 
