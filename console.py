@@ -239,9 +239,9 @@ class HBNBCommand(cmd.Cmd):
             match = re.search(r'"(.+)"', method)
             id = match.group(1)
             if method.startswith("show"):
-                do_show(class_name, id)
+                self.do_show(class_name, id)
             else:
-                do_destroy(class_name, id)
+                self.do_destroy(class_name, id)
     
 
     def c_all(self, class_name):
